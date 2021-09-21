@@ -9,8 +9,8 @@ const waitForUrl = async (url, MAX_TIMEOUT, { headers }) => {
       await axios.get(url, { headers });
       return;
     } catch (e) {
-      console.log("Url unavailable, retrying...");
-      await new Promise((r) => setTimeout(r, 2000));
+      console.log("Url unavailable, retrying...", url);
+      await new Promise((r) => setTimeout(r, 30000));
     }
   }
   core.setFailed(`Timeout reached: Unable to connect to ${url}`);
@@ -24,7 +24,7 @@ const run = async () => {
         "Action must be run in conjunction with the `pull_request` event"
       );
     }
-    const MAX_TIMEOUT = Number(core.getInput("max_timeout")) || 60 * 5;
+    const MAX_TIMEOUT = Number(core.getInput("max_timeout")) || 60 * 20;
     const siteName = core.getInput("site_name");
     if (!siteName) {
       core.setFailed("Required field `site_name` was not provided");

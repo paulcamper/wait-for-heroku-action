@@ -14,7 +14,7 @@ Optional — Stringified HTTP Header object key/value pairs to send in requests 
 
 ### `max_timeout`
 
-Optional — The amount of time to spend waiting on Heroku. Defaults to `300` seconds
+Optional — The amount of time to spend waiting on Heroku. Defaults to `20` minutes
 
 ## Outputs
 
