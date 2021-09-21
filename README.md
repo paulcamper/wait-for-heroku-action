@@ -1,12 +1,12 @@
-# Wait for Netlify — A GitHub Action ⏱
+# Wait for Heroku — A GitHub Action ⏱
 
-Do you have other Github actions (Lighthouse, Cypress, etc) that depend on the Netlify Preview URL? This action will wait until the url is available before running the next task.
+Do you have other Github actions (Lighthouse, Cypress, etc) that depend on the Heroku Preview URL? This action will wait until the url is available before running the next task.
 
 ## Inputs
 
 ### `site_name`
 
-**Required** The name of the Netlify site to reach `https://{site_name}.netlify.app`
+**Required** The name of the Heroku site to reach `https://{site_name}.herokuapp.com`
 
 ### `request_headers`
 
@@ -14,13 +14,13 @@ Optional — Stringified HTTP Header object key/value pairs to send in requests 
 
 ### `max_timeout`
 
-Optional — The amount of time to spend waiting on Netlify. Defaults to `60` seconds
+Optional — The amount of time to spend waiting on Heroku. Defaults to `300` seconds
 
 ## Outputs
 
 ### `url`
 
-The netlify deploy preview url that was deployed.
+The Heroku deploy preview url that was deployed.
 
 ## Example usage
 
@@ -28,11 +28,11 @@ Basic Usage
 
 ```yaml
 steps:
-  - name: Waiting for 200 from the Netlify Preview
-    uses: jakepartusch/wait-for-netlify-action@v1.2
+  - name: Waiting for 200 from the Heroku Preview
+    uses: paulcamper/wait-for-heroku-action@v1.2
     id: waitFor200
     with:
-      site_name: "jakepartusch"
+      site_name: "stage-pc2-web-pr"
       max_timeout: 60
 ```
 
@@ -61,11 +61,11 @@ jobs:
       - name: Build
         run: |
           npm run build
-      - name: Waiting for 200 from the Netlify Preview
-        uses: jakepartusch/wait-for-netlify-action@v1.2
+      - name: Waiting for 200 from the Heroku Preview
+        uses: paulcamper/wait-for-heroku-action@v1.2
         id: waitFor200
         with:
-          site_name: "jakepartusch"
+          site_name: "stage-pc2-web-pr"
       - name: Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.3.x
