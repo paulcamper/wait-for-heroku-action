@@ -3,13 +3,19 @@ const github = require("@actions/github");
 const axios = require("axios");
 
 const waitForUrl = async (url, MAX_TIMEOUT, { headers }) => {
+  const username = core.getInput('username')
+  const password = core.getInput('password')
+  let credentials = (username && password)
+    ? { auth: { username, password } }
+    : {}
+  
   const iterations = MAX_TIMEOUT / 2;
   for (let i = 0; i < iterations; i++) {
     try {
-      await axios.get(url, { headers });
+      await axios.get(url, { ...credentials, headers });
       return;
     } catch (e) {
-      console.log("Url unavailable, retrying...", url);
+      console.log("Url unavailable, retrying...", url, e);
       await new Promise((r) => setTimeout(r, 30000));
     }
   }
@@ -34,9 +40,7 @@ const run = async () => {
     const extraHeaders = core.getInput("request_headers");
     const headers = !extraHeaders ? {} : JSON.parse(extraHeaders)
     console.log(`Waiting for a 200 from: ${url}`);
-    await waitForUrl(url, MAX_TIMEOUT, {
-      headers,
-    });
+    await waitForUrl(url, MAX_TIMEOUT, { headers });
   } catch (error) {
     core.setFailed(error.message);
   }

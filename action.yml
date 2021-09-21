@@ -13,6 +13,12 @@ inputs:
   max_timeout:
     description: "The max time to run the action"
     required: false
+  username:
+    description: "Basic auth username"
+    required: false
+  password:
+    description: "Basic auth password"
+    required: false
 outputs:
   url:
     description: "The fully qualified deploy preview URL"
