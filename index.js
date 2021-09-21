@@ -24,12 +24,12 @@ const run = async () => {
         "Action must be run in conjunction with the `pull_request` event"
       );
     }
-    const MAX_TIMEOUT = Number(core.getInput("max_timeout")) || 60;
+    const MAX_TIMEOUT = Number(core.getInput("max_timeout")) || 60 * 5;
     const siteName = core.getInput("site_name");
     if (!siteName) {
       core.setFailed("Required field `site_name` was not provided");
     }
-    const url = `https://deploy-preview-${PR_NUMBER}--${siteName}.netlify.app`;
+    const url = `https://${siteName}-${PR_NUMBER}.herokuapp.com`;
     core.setOutput("url", url);
     const extraHeaders = core.getInput("request_headers");
     const headers = !extraHeaders ? {} : JSON.parse(extraHeaders)
